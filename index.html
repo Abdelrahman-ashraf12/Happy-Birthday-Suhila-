@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title> what is thes ?</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Pacifico&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(135deg, #ffcad4 0%, #b5f3ff 50%, #f0e4ff 100%);
+      min-height: 100vh;
+      overflow: auto;
+      font-family: 'Playfair Display', serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 20px;
+    }
+
+    .particles {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: 0;
+      top: 0;
+      left: 0;
+    }
+
+    .particles span {
+      position: absolute;
+      display: block;
+      width: 12px;
+      height: 12px;
+      background: rgba(255, 255, 255, 0.5);
+      animation: rise 12s linear infinite;
+      border-radius: 50%;
+      bottom: -20px;
+    }
+
+    .particles span.heart::before {
+      content: '💖';
+      position: absolute;
+      font-size: 14px;
+      color: #e91e63;
+      animation: rise 10s linear infinite;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .particles span.star::before {
+      content: '✨';
+      position: absolute;
+      font-size: 14px;
+      color: #ffd700;
+      animation: rise 8s linear infinite;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    @keyframes rise {
+      to {
+        transform: translateY(-120vh) rotate(360deg) scale(0.3);
+        opacity: 0;
+      }
+    }
+
+    .card {
+      z-index: 1;
+      background: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(20px);
+      border-radius: 25px;
+      padding: 40px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+      max-width: 90%;
+      width: 650px;
+      text-align: center;
+      animation: fadeIn 2s ease-out forwards;
+      opacity: 0;
+      position: relative;
+      border: 2px solid rgba(255, 255, 255, 0.5);
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.3), transparent);
+      animation: rotateGlow 10s linear infinite;
+      z-index: -1;
+    }
+
+    @keyframes rotateGlow {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    .card h1 {
+      font-family: 'Pacifico', cursive;
+      font-size: clamp(36px, 9vw, 52px);
+      margin-bottom: 25px;
+      animation: bounceIn 1.5s ease-out forwards, rainbow 10s linear infinite;
+      opacity: 0;
+      position: relative;
+    }
+
+    @keyframes bounceIn {
+      0% {
+        transform: scale(0.5);
+        opacity: 0;
+      }
+      60% {
+        transform: scale(1.2);
+        opacity: 0.7;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    @keyframes rainbow {
+      0% { color: #ff0000; text-shadow: 0 0 10px #ff0000, 0 0 25px #ff0000, 0 0 50px #ff0000; }
+      16% { color: #ff9900; text-shadow: 0 0 10px #ff9900, 0 0 25px #ff9900, 0 0 50px #ff9900; }
+      33% { color: #ffff00; text-shadow: 0 0 10px #ffff00, 0 0 25px #ffff00, 0 0 50px #ffff00; }
+      50% { color: #00ff00; text-shadow: 0 0 10px #00ff00, 0 0 25px #00ff00, 0 0 50px #00ff00; }
+      66% { color: #00ffff; text-shadow: 0 0 10px #00ffff, 0 0 25px #00ffff, 0 0 50px #00ffff; }
+      83% { color: #0000ff; text-shadow: 0 0 10px #0000ff, 0 0 25px #0000ff, 0 0 50px #0000ff; }
+      100% { color: #ff00ff; text-shadow: 0 0 10px #ff00ff, 0 0 25px #ff00ff, 0 0 50px #ff00ff; }
+    }
+
+    .card p {
+      font-size: clamp(16px, 4.5vw, 18px);
+      color: #2e2e2e;
+      line-height: 1.9;
+      margin-bottom: 20px;
+      white-space: pre-wrap;
+      overflow: hidden;
+    }
+
+    .celebrate-btn {
+      margin-top: 20px;
+      padding: 12px 25px;
+      font-family: 'Pacifico', cursive;
+      font-size: clamp(16px, 4vw, 18px);
+      color: #fff;
+      background: #e91e63;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: transform 0.3s, background 0.3s;
+      animation: slideUp 2s ease-out forwards;
+      animation-delay: 6s;
+      opacity: 0;
+    }
+
+    .celebrate-btn:hover {
+      background: #d81b60;
+      transform: scale(1.1);
+    }
+
+    @keyframes slideUp {
+      0% {
+        transform: translateY(40px);
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    #fireworks-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .sparkles {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .sparkles span {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: #ffd700;
+      border-radius: 50%;
+      animation: sparkle 2s ease-out infinite;
+      opacity: 0;
+    }
+
+    @keyframes sparkle {
+      0% { transform: scale(0); opacity: 0.8; }
+      50% { transform: scale(1.5); opacity: 0.4; }
+      100% { transform: scale(0); opacity: 0; }
+    }
+
+    @media (max-width: 600px) {
+      .card {
+        padding: 25px;
+        border-radius: 15px;
+      }
+      .particles span {
+        width: 10px;
+        height: 10px;
+      }
+      .particles span.heart::before, .particles span.star::before, .particles span.balloon::before {
+        font-size: 12px;
+      }
+      .celebrate-btn {
+        padding: 10px 20px;
+      }
+      .sparkles span {
+        width: 4px;
+        height: 4px;
+      }
+
+      .buttons-container {
+      display: flex;
+      justify-content: center;
+      gap: 15px; /* مسافة بين الزرارين */
+      flex-wrap: wrap; /* عشان لو الموبايل صغير ينزلوا تحت بعض */
+      margin-top: 20px;
+    }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="fireworks-canvas"></canvas>
+  <div class="particles" id="particles-container"></div>
+  <div class="sparkles" id="sparkles-container"></div>
+
+  <div class="card">
+    <h1 class="glow">Happy Birthday Suhila 🎉</h1>
+    <p class="typing" data-text="El nahrda 3id melad a8la w agml 7d 3erftu w 4oftu fy 7yati kolha asfa w agd3 w a7n souu fy el Donia dy bgd bgd b7bk awiii w 7arfyn b3sh2 el youm elly 3erftk feh kant agml sudfa wallahy ♥️♥️🥹"></p>
+    <p class="typing" data-text="Awel sana ab2a 2oryba mnk keda w a7la sana wallahy bgd gity mality 7ayaty w 8ayrtyha 360 darga w maltyha far7a w taqa egabya w kol 7aga beky b2t agml w bure aktr bgd awel mara a4uf banotaa malyana momizat kda bgd  rabna ye7miky w ye5liky l kol 7abaybk w y3wdk 3n kol 7aga we7sha marity biha ya 2alpi w ayamk kolha teb2a far7a w hana ya gamila yanyeer ♥️♥️✨ "></p>
+    <p class="typing" data-text="Kol sana w enty tayba ya nour 3iny w kol sana w enty m3aya ya ro7 2lpi mn gwa w yarb el sana elgaya tb2y a7san 7d fy el Donia w te7a2a2y kol 7aga nfsk fiha ya 2amry w a4ofk a7san w a4tar mohandesa ya kakota w rabna ye5liky lya w mi7rmne4 mnk abdan wla mn wgudk gnby ya kol 7yaty w nfdl su7ab w e5wat tol el 3omr ya ro7iii w a4ofk daymn far7ana w mabsota tol 3omrk yarp ♥️♥️♥️🌚"></p>
+    <p class="typing" data-text="Happy birthday ya agml souuuuu fy el Donia ♥️♥️🎊"></p>
+   <div class="buttons-container">
+      <button class="celebrate-btn" onclick="playCelebration()">Celebrate! 🎈</button>
+      
+      <button class="celebrate-btn" onclick="window.location.href='video.html'" style="background: #673ab7;">Watch Video 🎥</button>
+    </div>
+  </div>
+
+  <audio id="birthday-audio" loop>
+    <source src="/Happy Birthday.mp3" type="audio/mpeg"> 
+  </audio>
+
+  <script>
+    // Particles (Hearts, Stars, Balloons)
+    const container = document.getElementById('particles-container');
+    const particleCount = window.innerWidth <= 600 ? 60 : 120;
+
+    for (let i = 0; i < particleCount; i++) {
+      const span = document.createElement('span');
+      span.style.left = Math.random() * 100 + 'vw';
+      span.style.width = span.style.height = (Math.random() * 8 + 6) + 'px';
+      span.style.animationDuration = (Math.random() * 8 + 6) + 's';
+      span.style.animationDelay = (Math.random() * 10) + 's';
+      if (i % 4 === 0) {
+        span.classList.add('heart');
+      } else if (i % 4 === 1) {
+        span.classList.add('star');
+      } else if (i % 4 === 2) {
+        span.classList.add('balloon');
+      }
+      container.appendChild(span);
+    }
+
+    // Sparkles
+    const sparklesContainer = document.getElementById('sparkles-container');
+    const sparkleCount = window.innerWidth <= 600 ? 10 : 20;
+    for (let i = 0; i < sparkleCount; i++) {
+      const sparkle = document.createElement('span');
+      sparkle.style.left = Math.random() * 100 + '%';
+      sparkle.style.top = Math.random() * 100 + '%';
+      sparkle.style.animationDelay = Math.random() * 2 + 's';
+      sparklesContainer.appendChild(sparkle);
+    }
+
+    // Sequential Typing Effect
+    const typingElements = document.querySelectorAll('.typing');
+    const typingSpeed = 25; // Speed in ms per character
+    let currentElementIndex = 0;
+    let currentCharIndex = 0;
+
+    function typeSequential() {
+      if (currentElementIndex < typingElements.length) {
+        const element = typingElements[currentElementIndex];
+        const text = element.getAttribute('data-text');
+        element.textContent = '';
+
+        function type() {
+          if (currentCharIndex < text.length) {
+            element.textContent += text.charAt(currentCharIndex);
+            currentCharIndex++;
+            setTimeout(type, typingSpeed);
+          } else {
+            currentElementIndex++;
+            currentCharIndex = 0;
+            setTimeout(typeSequential, 500); // Small pause before next paragraph
+          }
+        }
+        setTimeout(type, 1500); // Start after h1 animation
+      }
+    }
+
+    typeSequential();
+
+    // Fireworks
+    const canvas = document.getElementById('fireworks-canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const fireworks = [];
+
+    function createFirework() {
+      const x = Math.random() * canvas.width;
+      const y = Math.random() * canvas.height;
+      const firework = {
+        x: x,
+        y: y,
+        size: Math.random() * 3 + 2,
+        speed: Math.random() * 5 + 5,
+        angle: Math.random() * Math.PI * 2,
+        particles: []
+      };
+      for (let i = 0; i < 20; i++) {
+        firework.particles.push({
+          x: x,
+          y: y,
+          vx: Math.cos(i * Math.PI / 10) * (Math.random() * 5 + 2),
+          vy: Math.sin(i * Math.PI / 10) * (Math.random() * 5 + 2),
+          life: 0,
+          maxLife: Math.random() * 30 + 30
+        });
+      }
+      fireworks.push(firework);
+    }
+
+    function animateFireworks() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      fireworks.forEach((firework, index) => {
+        firework.particles.forEach(particle => {
+          particle.x += particle.vx;
+          particle.y += particle.vy;
+          particle.vy += 0.05; // Gravity
+          particle.life++;
+          if (particle.life < particle.maxLife) {
+            ctx.beginPath();
+            ctx.arc(particle.x, particle.y, firework.size, 0, Math.PI * 2);
+            ctx.fillStyle = firework.color;
+            ctx.globalAlpha = 1 - particle.life / particle.maxLife;
+            ctx.fill();
+          }
+        });
+        if (firework.particles.every(p => p.life >= p.maxLife)) {
+          fireworks.splice(index, 1);
+        }
+      });
+      requestAnimationFrame(animateFireworks);
+    }
+
+    function playCelebration() {
+      const audio = document.getElementById('birthday-audio');
+      audio.play().catch(error => console.log("Audio play failed:", error));
+      alert('Let’s celebrate Suhila special day! 🎂🎉');
+      for (let i = 0; i < 5; i++) {
+        setTimeout(createFirework, i * 200);
+      }
+    }
+
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+
+    animateFireworks();
+  </script>
+</body>
+</html>

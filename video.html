@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Special Video 🎬</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Pacifico&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: linear-gradient(135deg, #ffcad4 0%, #b5f3ff 50%, #f0e4ff 100%);
+      min-height: 100vh;
+      overflow: auto;
+      font-family: 'Playfair Display', serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    /* نفس خلفية الجسيمات */
+    .particles { position: fixed; width: 100%; height: 100%; overflow: hidden; z-index: 0; top: 0; left: 0; }
+    .particles span { position: absolute; display: block; width: 12px; height: 12px; background: rgba(255, 255, 255, 0.5); animation: rise 12s linear infinite; border-radius: 50%; bottom: -20px; }
+    .particles span.heart::before { content: '💖'; position: absolute; font-size: 14px; animation: rise 10s linear infinite; left: 50%; transform: translateX(-50%); }
+    .particles span.star::before { content: '✨'; position: absolute; font-size: 14px; animation: rise 8s linear infinite; left: 50%; transform: translateX(-50%); }
+
+    @keyframes rise {
+      to { transform: translateY(-120vh) rotate(360deg) scale(0.3); opacity: 0; }
+    }
+
+    /* تنسيق الكارت */
+    .card {
+      z-index: 1;
+      background: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(20px);
+      border-radius: 25px;
+      padding: 30px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+      max-width: 90%;
+      width: 500px; /* عرض مناسب للفيديو */
+      text-align: center;
+      animation: fadeIn 1.5s ease-out forwards;
+      border: 2px solid rgba(255, 255, 255, 0.5);
+    }
+
+    @keyframes fadeIn { to { opacity: 1; } }
+
+    .card h1 {
+      font-family: 'Pacifico', cursive;
+      font-size: 32px;
+      margin-bottom: 20px;
+      color: #e91e63;
+      text-shadow: 0 0 10px rgba(233, 30, 99, 0.3);
+    }
+
+    /* تنسيق حاوية الفيديو عشان يظهر بشكل الموبايل */
+    .video-container {
+      width: 100%;
+      max-width: 300px; /* عرض شاشة موبايل متوسط */
+      margin: 0 auto 20px auto;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      border: 3px solid white;
+      background: #000;
+    }
+
+    video {
+      width: 100%;
+      height: auto;
+      display: block;
+      /* Aspect Ratio 9:16 للموبايل */
+      aspect-ratio: 9 / 16; 
+      object-fit: cover;
+    }
+
+    .back-btn {
+      padding: 10px 30px;
+      font-family: 'Pacifico', cursive;
+      font-size: 18px;
+      color: #fff;
+      background: #e91e63;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+    .back-btn:hover { transform: scale(1.1); background: #d81b60; }
+
+    @media (max-width: 600px) {
+      .card { padding: 20px; width: 95%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="particles" id="particles-container"></div>
+
+  <div class="card">
+    <h1>A Special Memory 🎥</h1>
+    
+    <div class="video-container">
+      <video controls>
+        <source src="VID-20260102-WA0049.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+
+    <button class="back-btn" onclick="window.location.href='index.html'">Back Home 🏠</button>
+  </div>
+
+  <script>
+    // Particles Script (نفس الأنيميشن بتاع الصفحة الأولى)
+    const container = document.getElementById('particles-container');
+    const particleCount = window.innerWidth <= 600 ? 50 : 100;
+
+    for (let i = 0; i < particleCount; i++) {
+      const span = document.createElement('span');
+      span.style.left = Math.random() * 100 + 'vw';
+      span.style.width = span.style.height = (Math.random() * 8 + 6) + 'px';
+      span.style.animationDuration = (Math.random() * 8 + 6) + 's';
+      span.style.animationDelay = (Math.random() * 10) + 's';
+      if (i % 3 === 0) span.classList.add('heart');
+      else if (i % 3 === 1) span.classList.add('star');
+      container.appendChild(span);
+    }
+  </script>
+</body>
+</html>
